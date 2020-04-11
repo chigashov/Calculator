@@ -52,7 +52,8 @@ namespace FirstApp
         }
         private void ButtonPoint(object sender, EventArgs e)
         {
-            Output.Text = Output.Text + ",";
+            if ((Output.Text.IndexOf(",") == -1) && (Output.Text.IndexOf("∞") == -1))
+                Output.Text += ",";
         }
         private void ButtonOperator(object sender, EventArgs e)
         {
@@ -80,24 +81,27 @@ namespace FirstApp
         }
         private void ButtonClear(object sender, EventArgs e)
         {
-            int lenght = Output.Text.Length - 1;
-            string text = Output.Text;
-            Output.Text = "";
-            for (int i = 0; i < lenght; i++)
+            if (currentState == 1)
             {
-                Output.Text = Output.Text + text[i];
-            }
-            double number;
-            if (double.TryParse(this.Output.Text, out number))
-            {
-                this.Output.Text = number.ToString();
-                if (currentState == 1)
+                int lenght = Output.Text.Length - 1;
+                string text = Output.Text;
+                Output.Text = "";
+                for (int i = 0; i < lenght; i++)
                 {
-                    firstnumber = number;
+                    Output.Text = Output.Text + text[i];
                 }
-                else
+                double number;
+                if (double.TryParse(this.Output.Text, out number))
                 {
-                    secondnumber = number;
+                    this.Output.Text = number.ToString();
+                    if (currentState == 1)
+                    {
+                        firstnumber = number;
+                    }
+                    else
+                    {
+                        secondnumber = number;
+                    }
                 }
             }
         }
